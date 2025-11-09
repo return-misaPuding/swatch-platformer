@@ -1,11 +1,12 @@
 extends CharacterBody2D
-
+signal enemy_hit
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
 @export var blue_sprite: Texture2D
 @export var colorless_sprite: Texture2D
 @onready var sprite_array = [colorless_sprite,yellow_sprite, red_sprite, blue_sprite]
 @onready var sprite = $Sprite2D
+const FULL_MASK = 0b1111
 const MAIN_SPEED = 280.0
 var SPEED = MAIN_SPEED
 const JUMP_VELOCITY = -400.0
@@ -15,7 +16,7 @@ const COLOR_STOP = 4
 var color_counter = 1
 var first_frame = true
 func inv_col_mask(no_collide: int) -> int:
-	var full = 0b1111
+	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
 	collision_mask = res
 	return res
@@ -28,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	else:
 		double_jump = 2
-
+		velocity_cancel_charge = 3
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or double_jump > 0):
 		velocity.y = JUMP_VELOCITY
@@ -43,12 +44,25 @@ func _physics_process(delta: float) -> void:
 		else:
 			inv_col_mask(color_counter)
 		sprite.texture = sprite_array[color_counter-1]
-		print(color_counter)
-		print(collision_mask)
+		#print(color_counter)
+		#print(collision_mask)
 		
 	
 	if Input.is_action_just_pressed("velocity_cancel"):
-		pass
+		if velocity_cancel_charge > 1:
+			velocity_cancel_charge -= 1
+			velocity.x = 0
+			velocity.y = 0
+		elif velocity_cancel_charge > 0:
+			velocity_cancel_charge -= 1
+			velocity.x /= 4
+			velocity.y /= 4 #velocity cancel loses effectiveness after the 2nd use
+			#how long do you plan on staying in the air? :p
+			color_counter = 1
+			collision_mask = FULL_MASK
+			sprite.texture = colorless_sprite #'punish' cancel spam by switching to colorless
+		
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
