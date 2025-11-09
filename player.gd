@@ -4,7 +4,8 @@ extends CharacterBody2D
 const SPEED = 280.0
 const JUMP_VELOCITY = -400.0
 var double_jump = 2
-
+const COLOR_STOP = 4
+var color_counter = 0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
