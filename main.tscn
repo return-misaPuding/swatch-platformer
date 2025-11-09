@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://d11aevt3b37l1"]
+[gd_scene load_steps=24 format=4 uid="uid://d11aevt3b37l1"]
 
 [ext_resource type="Script" uid="uid://brltw0m1gyax4" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://ciibgfipr2f6q" path="res://images/maptile32-gray.png" id="2_0xm2m"]
@@ -6,6 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://bqpccpexe3pn5" path="res://images/maptile32-yellow.png" id="4_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://cr045l41hh12d" path="res://images/maptile32-red.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw1h7fdvj0rca" path="res://images/maptile32-blue.png" id="6_7mycd"]
+
+[sub_resource type="Gradient" id="Gradient_7mycd"]
+colors = PackedColorArray(0, 0, 0, 1, 0.7529412, 0.3529412, 0.3529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_272bh"]
+gradient = SubResource("Gradient_7mycd")
+
+[sub_resource type="Gradient" id="Gradient_5vw27"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.78431374, 0.19607843, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kek77"]
+gradient = SubResource("Gradient_5vw27")
+
+[sub_resource type="Gradient" id="Gradient_4c57u"]
+colors = PackedColorArray(0, 0, 0, 1, 0.3529412, 0.3529412, 0.7529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_efxa6"]
+gradient = SubResource("Gradient_4c57u")
+
+[sub_resource type="Gradient" id="Gradient_dg77c"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ycdy4"]
+gradient = SubResource("Gradient_dg77c")
 
 [sub_resource type="Gradient" id="Gradient_7dm0k"]
 
@@ -64,6 +87,10 @@ sources/5 = SubResource("TileSetAtlasSource_272bh")
 [node name="Player" type="CharacterBody2D" parent="."]
 collision_mask = 15
 script = ExtResource("1_0xm2m")
+red_sprite = SubResource("GradientTexture2D_272bh")
+yellow_sprite = SubResource("GradientTexture2D_kek77")
+blue_sprite = SubResource("GradientTexture2D_efxa6")
+colorless_sprite = SubResource("GradientTexture2D_ycdy4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 position = Vector2(0, 1)
