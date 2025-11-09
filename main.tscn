@@ -62,6 +62,7 @@ sources/5 = SubResource("TileSetAtlasSource_272bh")
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
+collision_mask = 15
 script = ExtResource("1_0xm2m")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
