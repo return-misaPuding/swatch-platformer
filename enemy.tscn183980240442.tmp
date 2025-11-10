@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://buld3bcp0l0s7"]
+
+[ext_resource type="Script" uid="uid://c8o47jeinbhni" path="res://sqenemy.gd" id="1_7k104"]
+[ext_resource type="Texture2D" uid="uid://dfl35dc4ylvqi" path="res://images/light/normal/enemylight-normal.png" id="2_4gyqm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qi2p4"]
+size = Vector2(49, 49)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SqEnemy" type="RigidBody2D" parent="." groups=["hit"]]
+script = ExtResource("1_7k104")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SqEnemy"]
+shape = SubResource("RectangleShape2D_4gyqm")
+
+[node name="Sprite2D" type="Sprite2D" parent="SqEnemy"]
+texture = ExtResource("2_4gyqm")
+
+[node name="SqHitbox" type="Area2D" parent="SqEnemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SqEnemy/SqHitbox"]
+shape = SubResource("RectangleShape2D_qi2p4")

@@ -6,6 +6,8 @@ signal enemy_hit
 @export var colorless_sprite: Texture2D
 @onready var sprite_array = [colorless_sprite,yellow_sprite, red_sprite, blue_sprite]
 @onready var sprite = $Sprite2D
+@onready var hitbox = $Hitbox
+@onready var hitboxcollide = $Hitbox/HitboxCollision
 const FULL_MASK = 0b1111
 const MAIN_SPEED = 280.0
 var SPEED = MAIN_SPEED
@@ -15,6 +17,14 @@ var velocity_cancel_charge = 3
 const COLOR_STOP = 4
 var color_counter = 1
 var first_frame = true
+var hitbox_disabled = false
+var rel: Transform2D
+var rel_vec: Vector2
+var rel_ratio_x: float
+var rel_ratio_y: float
+var sign_vec: Vector2
+var schedule_vel_x: float
+var schedule_vel_y: float
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
@@ -24,6 +34,10 @@ func inv_col_mask(no_collide: int) -> int:
 func _physics_process(delta: float) -> void:
 	if first_frame:
 		pass
+	if hitbox_disabled:
+		hitboxcollide.set_deferred("disabled",false)
+		print("enabling player hitbox")
+		hitbox_disabled = false
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -70,4 +84,32 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED*0.2)
+	velocity.x += schedule_vel_x
+	velocity.y += schedule_vel_y
+	schedule_vel_x = 0
+	schedule_vel_y = 0
 	move_and_slide()
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	#enemy_hit.emit()
+	if body.is_in_group("hit"):
+		print("hittable object encountered")
+		body.hit_by_player()
+	hitbox_disabled = true
+	hitboxcollide.set_deferred("disabled",true)
+	rel = body.get_relative_transform_to_parent($Hitbox)
+	print(rel) #debug position check
+	rel_vec = rel.origin
+	rel_ratio_x = rel_vec.x/rel_vec.length()
+	rel_ratio_y = rel_vec.y/rel_vec.length()
+	sign_vec = rel.origin.normalized()
+	if body.is_in_group("hit"):
+		schedule_vel_x += -sign_vec.x*SPEED*1.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
+		schedule_vel_y += -sign_vec.y*SPEED*1.5*rel_ratio_y #this ensures knockback
+	print(body)
+
+
+func _on_level_end_body_entered(body: Node2D) -> void:
+	if body.is_in_group("playergroup"):
+		print("entered portal")

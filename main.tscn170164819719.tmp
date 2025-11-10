@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://d11aevt3b37l1"]
+[gd_scene load_steps=26 format=4 uid="uid://d11aevt3b37l1"]
 
 [ext_resource type="Script" uid="uid://brltw0m1gyax4" path="res://player.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://ciibgfipr2f6q" path="res://images/maptile32-gray.png" id="2_0xm2m"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cr045l41hh12d" path="res://images/maptile32-red.png" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://bw1h7fdvj0rca" path="res://images/maptile32-blue.png" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://buld3bcp0l0s7" path="res://enemy.tscn" id="7_272bh"]
-[ext_resource type="Script" uid="uid://c6kttfgq70xdc" path="res://level_end.gd" id="8_5vw27"]
 
 [sub_resource type="Gradient" id="Gradient_7mycd"]
 colors = PackedColorArray(0, 0, 0, 1, 0.7529412, 0.3529412, 0.3529412, 1)
@@ -51,7 +50,7 @@ height = 63
 size = Vector2(63, 63)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
-size = Vector2(64, 64)
+size = Vector2(62, 62)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0xm2m"]
 texture = ExtResource("2_0xm2m")
@@ -110,7 +109,6 @@ position = Vector2(0, 1)
 texture = SubResource("GradientTexture2D_ig7tw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_0xm2m")
 
@@ -130,14 +128,5 @@ tile_map_data = PackedByteArray("AADp//f/AQAAAAAAAADp//j/AQAAAAAAAADp//n/AQAAAAA
 tile_set = SubResource("TileSet_h2yge")
 
 [node name="Node2D" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(-358, 0)
-
-[node name="LevelEnd" type="Area2D" parent="."]
-script = ExtResource("8_5vw27")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelEnd"]
-position = Vector2(517, 171)
-polygon = PackedVector2Array(-32, -31, 32, -31, 32, 33, -32, 33)
 
 [connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]
-[connection signal="body_entered" from="LevelEnd" to="Player" method="_on_level_end_body_entered"]
