@@ -1,5 +1,6 @@
 extends CharacterBody2D
 signal enemy_hit
+signal advance_level
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
 @export var blue_sprite: Texture2D
@@ -8,10 +9,11 @@ signal enemy_hit
 @onready var sprite = $Sprite2D
 @onready var hitbox = $Hitbox
 @onready var hitboxcollide = $Hitbox/HitboxCollision
+@onready var current_level = 1
 const FULL_MASK = 0b1111
-const MAIN_SPEED = 280.0
+const MAIN_SPEED = 350.0
 var SPEED = MAIN_SPEED
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -500.0
 var double_jump = 2
 var velocity_cancel_charge = 3
 const COLOR_STOP = 4
@@ -25,6 +27,7 @@ var rel_ratio_y: float
 var sign_vec: Vector2
 var schedule_vel_x: float
 var schedule_vel_y: float
+var target_scene_path: String
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
@@ -104,12 +107,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	rel_ratio_x = rel_vec.x/rel_vec.length()
 	rel_ratio_y = rel_vec.y/rel_vec.length()
 	sign_vec = rel.origin.normalized()
-	if body.is_in_group("hit"):
-		schedule_vel_x += -sign_vec.x*SPEED*1.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
-		schedule_vel_y += -sign_vec.y*SPEED*1.5*rel_ratio_y #this ensures knockback
+	if body.is_in_group("hit"): #protect against the first collision event @onready
+		schedule_vel_x += -sign_vec.x*SPEED*2*rel_ratio_x #negative of the sign pushes the player away from the enemy
+		schedule_vel_y += -sign_vec.y*SPEED*1*rel_ratio_y #this ensures knockback
 	print(body)
-
-
-func _on_level_end_body_entered(body: Node2D) -> void:
-	if body.is_in_group("playergroup"):
-		print("entered portal")

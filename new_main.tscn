@@ -1,0 +1,83 @@
+[gd_scene load_steps=15 format=3 uid="uid://dil7raqsxdn1s"]
+
+[ext_resource type="Script" uid="uid://brltw0m1gyax4" path="res://player.gd" id="1_4yy1f"]
+[ext_resource type="Script" uid="uid://sn6ujv73up73" path="res://lvl_manager.gd" id="3_2ss5u"]
+
+[sub_resource type="Gradient" id="Gradient_7mycd"]
+colors = PackedColorArray(0, 0, 0, 1, 0.7529412, 0.3529412, 0.3529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5d015"]
+gradient = SubResource("Gradient_7mycd")
+width = 63
+height = 63
+
+[sub_resource type="Gradient" id="Gradient_5vw27"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.78431374, 0.19607843, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ss5u"]
+gradient = SubResource("Gradient_5vw27")
+width = 63
+height = 63
+
+[sub_resource type="Gradient" id="Gradient_4c57u"]
+colors = PackedColorArray(0, 0, 0, 1, 0.3529412, 0.3529412, 0.7529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ckrgq"]
+gradient = SubResource("Gradient_4c57u")
+width = 63
+height = 63
+
+[sub_resource type="Gradient" id="Gradient_dg77c"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_touta"]
+gradient = SubResource("Gradient_dg77c")
+width = 63
+height = 63
+
+[sub_resource type="Gradient" id="Gradient_7dm0k"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qcw2d"]
+gradient = SubResource("Gradient_7dm0k")
+width = 63
+height = 63
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qgpo"]
+size = Vector2(63, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ksskx"]
+size = Vector2(64, 64)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["playergroup"]]
+collision_mask = 15
+script = ExtResource("1_4yy1f")
+red_sprite = SubResource("GradientTexture2D_5d015")
+yellow_sprite = SubResource("GradientTexture2D_2ss5u")
+blue_sprite = SubResource("GradientTexture2D_ckrgq")
+colorless_sprite = SubResource("GradientTexture2D_touta")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(0, 1)
+texture = SubResource("GradientTexture2D_qcw2d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_7qgpo")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, 1)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Hitbox" type="Area2D" parent="Player"]
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="Player/Hitbox"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ksskx")
+
+[node name="LvlManager" type="Node2D" parent="."]
+script = ExtResource("3_2ss5u")
+
+[connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]

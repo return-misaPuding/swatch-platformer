@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://baq2crvjf2cf2"]
+
+[ext_resource type="Script" uid="uid://c6kttfgq70xdc" path="res://level_end.gd" id="1_lmp1b"]
+[ext_resource type="Texture2D" uid="uid://b1kydpyjiomyr" path="res://images/portal-tp.png" id="2_lmp1b"]
+
+[node name="LevelEnd" type="Area2D" groups=["portal"]]
+script = ExtResource("1_lmp1b")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0.40000153, -0.3999939)
+polygon = PackedVector2Array(-24, -56, 24, -56, 24, 56, -24, 56)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.40000153, 0.6000061)
+texture = ExtResource("2_lmp1b")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

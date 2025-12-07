@@ -47,6 +47,9 @@ func _ready() -> void:
 	enemy_sprites.append(load_folder('res://images/light/yellow/'))
 	enemy_sprites.append(load_folder('res://images/light/red/'))
 	enemy_sprites.append(load_folder('res://images/light/blue/'))
+	#TODO: add dark variant
+	#(4 lives, different attacks once they attack)
+	#different color collision properties
 	
 
 

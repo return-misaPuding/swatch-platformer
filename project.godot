@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="grid-platformer"
-run/main_scene="uid://d11aevt3b37l1"
+run/main_scene="uid://dil7raqsxdn1s"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 playergroup=""
 hit=""
+portal=""
 
 [input]
 
