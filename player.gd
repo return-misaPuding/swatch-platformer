@@ -14,6 +14,7 @@ const FULL_MASK = 0b1111
 const MAIN_SPEED = 350.0
 var SPEED = MAIN_SPEED
 const JUMP_VELOCITY = -500.0
+const KILL_Y = 16*150
 var double_jump = 2
 var velocity_cancel_charge = 3
 const COLOR_STOP = 4
@@ -28,6 +29,22 @@ var sign_vec: Vector2
 var schedule_vel_x: float
 var schedule_vel_y: float
 var target_scene_path: String
+var spawn: Node2D
+var main_parent: Node2D
+var lvl_manager_node: Node2D
+
+func temp_death():
+	main_parent = get_parent()
+	print(get_parent)
+	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
+	if lvl_manager_node:
+		spawn = lvl_manager_node.get_child(0).get_node_or_null("PlayerSpawn")
+		if spawn:
+			self.global_position = spawn.global_position
+		else:
+			print("where spawn")
+	else:
+		print("where LvlManager")
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
@@ -37,6 +54,8 @@ func inv_col_mask(no_collide: int) -> int:
 func _physics_process(delta: float) -> void:
 	if first_frame:
 		pass
+	if position.y >= KILL_Y:
+		temp_death()
 	if hitbox_disabled:
 		hitboxcollide.set_deferred("disabled",false)
 		print("enabling player hitbox")
