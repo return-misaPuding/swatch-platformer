@@ -1,4 +1,5 @@
 extends Node2D
+const max_level = 2
 var current_level = 1
 var target_scene_path: String
 var current_scene: Node2D = null
@@ -9,7 +10,10 @@ func level_advance():
 	print("entered portal")
 	current_level += 1
 	target_scene_path = "res://lvl"+str(current_level)+".tscn"
-	load_level(target_scene_path)
+	if current_level > max_level:
+		load_level("res://win.tscn")
+	else:
+		load_level(target_scene_path)
 
 func _on_portal_trigger():
 	print("portal trigger, current "+str(current_level))

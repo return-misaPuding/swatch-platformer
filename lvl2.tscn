@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://c56hmu1dgeked"]
+[gd_scene load_steps=4 format=4 uid="uid://c56hmu1dgeked"]
 
 [ext_resource type="TileSet" uid="uid://bp5q6hfux3as0" path="res://lvl1.tres" id="1_5fqbh"]
 [ext_resource type="PackedScene" uid="uid://baq2crvjf2cf2" path="res://level_end.tscn" id="2_1bcrd"]
+[ext_resource type="LabelSettings" uid="uid://cqkk6qdhdnxxn" path="res://label.tres" id="3_p65l6"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,3 +16,20 @@ position = Vector2(240, 291)
 
 [node name="LevelEnd" parent="." instance=ExtResource("2_1bcrd")]
 position = Vector2(220, 994)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+bbcode_enabled = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 425.0
+offset_top = 343.0
+offset_right = 768.0
+offset_bottom = 583.0
+text = "Press E to cycle through colors.
+
+Having the same color as a block or an enemy will make you \"blend in\", letting you pass through."
+label_settings = ExtResource("3_p65l6")
+horizontal_alignment = 3
+autowrap_mode = 2

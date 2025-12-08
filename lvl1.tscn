@@ -2,11 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://bp5q6hfux3as0" path="res://lvl1.tres" id="1_t5y7p"]
 [ext_resource type="PackedScene" uid="uid://baq2crvjf2cf2" path="res://level_end.tscn" id="3_t5y7p"]
+[ext_resource type="LabelSettings" uid="uid://cqkk6qdhdnxxn" path="res://label.tres" id="4_wg0iv"]
 [ext_resource type="PackedScene" uid="uid://buld3bcp0l0s7" path="res://enemy.tscn" id="7_272bh"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_t5y7p"]
-font_size = 22
-font_color = Color(1, 0.78431374, 1, 1)
 
 [node name="lvl1" type="Node2D"]
 
@@ -29,6 +26,6 @@ offset_top = -210.0
 offset_right = 303.0
 offset_bottom = -145.0
 text = "Ram the light enemy to Disappear them away"
-label_settings = SubResource("LabelSettings_t5y7p")
+label_settings = ExtResource("4_wg0iv")
 horizontal_alignment = 3
 autowrap_mode = 2
