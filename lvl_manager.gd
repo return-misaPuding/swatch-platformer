@@ -14,6 +14,7 @@ func level_advance():
 		load_level("res://win.tscn")
 	else:
 		load_level(target_scene_path)
+		
 
 func _on_portal_trigger():
 	print("portal trigger, current "+str(current_level))
