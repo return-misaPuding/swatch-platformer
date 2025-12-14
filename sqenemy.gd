@@ -1,5 +1,4 @@
 extends RigidBody2D
-signal enemy_hit
 var HP = 9
 var enemy_sprites: Array = [] #2D array of colors>damage states
 @onready var sprite = $Sprite2D
@@ -13,7 +12,7 @@ func enemy_die():
 	$CollisionShape2D.set_deferred("disabled",true)
 	call_deferred("queue_free")
 
-func hit_by_player():
+func hit_by_player_above():
 	if HP > 1:
 		sprite.texture = enemy_sprites[0][HP-2]
 	else:
@@ -21,6 +20,8 @@ func hit_by_player():
 		return null
 	HP -= 1
 	print("enemy hit, "+str(HP)+" HP remaining")
+func hit_by_player():
+	pass
 	
 func load_folder(path: String) -> Array[Texture2D]:
 	var file_textures: Array[Texture2D] = []
@@ -36,13 +37,6 @@ func _on_enemy_hit():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	"""
-	var player = get_tree().get_first_node_in_group("playergroup")
-	print("are we even real")
-	if player:
-		print("i'm da playah")
-		player.connect("enemy_hit", Callable(self, "_on_enemy_hit"))
-	"""
 	enemy_sprites.append(load_folder('res://images/light/normal/'))
 	enemy_sprites.append(load_folder('res://images/light/yellow/'))
 	enemy_sprites.append(load_folder('res://images/light/red/'))

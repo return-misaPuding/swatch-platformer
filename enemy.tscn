@@ -11,7 +11,7 @@ size = Vector2(49, 49)
 
 [node name="EnemyNode" type="Node2D"]
 
-[node name="SqEnemy" type="RigidBody2D" parent="." groups=["hit"]]
+[node name="SqEnemy" type="RigidBody2D" parent="." groups=["hit", "knockback"]]
 script = ExtResource("1_7k104")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SqEnemy"]

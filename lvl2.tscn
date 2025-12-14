@@ -23,6 +23,7 @@ offset_bottom = 40.0
 bbcode_enabled = true
 
 [node name="Label" type="Label" parent="."]
+z_index = -5
 offset_left = 425.0
 offset_top = 343.0
 offset_right = 768.0

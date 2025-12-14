@@ -1,7 +1,8 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://bp5q6hfux3as0"]
+[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://bp5q6hfux3as0"]
 
 [ext_resource type="Texture2D" uid="uid://ciibgfipr2f6q" path="res://images/maptile32-gray.png" id="1_ckjw1"]
 [ext_resource type="Texture2D" uid="uid://bkuldwaxkpwqo" path="res://images/maptile32-dark.png" id="2_8refm"]
+[ext_resource type="Texture2D" uid="uid://bb0m340mr1rxo" path="res://images/maptile32-danger.png" id="3_8refm"]
 [ext_resource type="Texture2D" uid="uid://bqpccpexe3pn5" path="res://images/maptile32-yellow.png" id="3_52rpy"]
 [ext_resource type="Texture2D" uid="uid://cr045l41hh12d" path="res://images/maptile32-red.png" id="4_o2jpf"]
 [ext_resource type="Texture2D" uid="uid://bw1h7fdvj0rca" path="res://images/maptile32-blue.png" id="5_khbjh"]
@@ -17,6 +18,12 @@ texture = ExtResource("2_8refm")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52rpy"]
+texture = ExtResource("3_8refm")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_4/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 texture = ExtResource("3_52rpy")
@@ -42,8 +49,10 @@ physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 2
 physics_layer_2/collision_layer = 4
 physics_layer_3/collision_layer = 8
+physics_layer_4/collision_layer = 16
 sources/0 = SubResource("TileSetAtlasSource_0xm2m")
 sources/1 = SubResource("TileSetAtlasSource_1bvp3")
 sources/3 = SubResource("TileSetAtlasSource_lquwl")
 sources/4 = SubResource("TileSetAtlasSource_7mycd")
 sources/5 = SubResource("TileSetAtlasSource_272bh")
+sources/2 = SubResource("TileSetAtlasSource_52rpy")

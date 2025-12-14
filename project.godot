@@ -24,6 +24,7 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 playergroup=""
 hit=""
 portal=""
+knockback="causes knockback to player"
 
 [input]
 
@@ -81,6 +82,7 @@ velocity_cancel={
 2d_physics/layer_2="yellow"
 2d_physics/layer_3="red"
 2d_physics/layer_4="blue"
+2d_physics/layer_5="hazard"
 
 [rendering]
 

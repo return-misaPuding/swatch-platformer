@@ -16,6 +16,7 @@ tile_set = ExtResource("1_wao2c")
 [node name="PlayerSpawn" type="Node2D" parent="."]
 
 [node name="WinLabel" type="Label" parent="."]
+z_index = -5
 offset_left = -98.0
 offset_top = -96.0
 offset_right = 97.0
@@ -24,6 +25,7 @@ text = "You won!"
 label_settings = SubResource("LabelSettings_wao2c")
 
 [node name="Label" type="Label" parent="."]
+z_index = -5
 offset_left = -156.0
 offset_top = 18.0
 offset_right = 157.0

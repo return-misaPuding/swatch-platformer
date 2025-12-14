@@ -45,6 +45,12 @@ func temp_death():
 			print("where spawn")
 	else:
 		print("where LvlManager")
+		
+func _on_null_velocity() -> void:
+	velocity = Vector2.ZERO
+	velocity.x = 0
+	velocity.y = 0
+
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
@@ -58,7 +64,7 @@ func _physics_process(delta: float) -> void:
 		temp_death()
 	if hitbox_disabled:
 		hitboxcollide.set_deferred("disabled",false)
-		print("enabling player hitbox")
+		#print("enabling player hitbox")
 		hitbox_disabled = false
 	# Add the gravity.
 	if not is_on_floor():
@@ -115,18 +121,22 @@ func _physics_process(delta: float) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
+	#rel = body.get_relative_transform_to_parent($Hitbox)
+	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
-		print("hittable object encountered")
+		print("Y rel "+str(rel_vec.y))
+		print("player Y "+str(global_position.y)+" enemy Y "+str(body.global_position.y))
+		if global_position.y+30 < body.global_position.y:
+			body.hit_by_player_above()
 		body.hit_by_player()
 	hitbox_disabled = true
 	hitboxcollide.set_deferred("disabled",true)
-	rel = body.get_relative_transform_to_parent($Hitbox)
-	print(rel) #debug position check
-	rel_vec = rel.origin
+	print(rel_vec) #debug position check
+	print("length "+str(rel_vec.length()))
 	rel_ratio_x = rel_vec.x/rel_vec.length()
 	rel_ratio_y = rel_vec.y/rel_vec.length()
-	sign_vec = rel.origin.normalized()
-	if body.is_in_group("hit"): #protect against the first collision event @onready
-		schedule_vel_x += -sign_vec.x*SPEED*2*rel_ratio_x #negative of the sign pushes the player away from the enemy
-		schedule_vel_y += -sign_vec.y*SPEED*1*rel_ratio_y #this ensures knockback
+	sign_vec = rel_vec.normalized()
+	if body.is_in_group("knockback"): #protect against the first collision event @onready
+		schedule_vel_x += -sign_vec.x*SPEED*2.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
+		schedule_vel_y += -sign_vec.y*SPEED*0*rel_ratio_y #this ensures knockback
 	print(body)

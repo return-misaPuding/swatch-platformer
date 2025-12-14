@@ -6,6 +6,8 @@ var current_scene: Node2D = null
 var trigger: Signal
 var spawn: Node2D
 @onready var player = $Player
+signal player_null_velocity
+
 func level_advance():
 	print("entered portal")
 	current_level += 1
@@ -23,6 +25,7 @@ func _on_portal_trigger():
 func load_level(path: String):
 	if current_scene:
 		current_scene.queue_free()
+	player_null_velocity.emit()
 	current_scene = load(path).instantiate()
 	self.add_child(current_scene)
 	await get_tree().process_frame
@@ -51,5 +54,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

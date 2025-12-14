@@ -81,3 +81,4 @@ shape = SubResource("RectangleShape2D_ksskx")
 script = ExtResource("3_2ss5u")
 
 [connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]
+[connection signal="player_null_velocity" from="LvlManager" to="Player" method="_on_null_velocity"]
