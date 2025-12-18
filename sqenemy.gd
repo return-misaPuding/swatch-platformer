@@ -2,6 +2,8 @@ extends CharacterBody2D
 var HP = 9
 var enemy_sprites: Array = [] #2D array of colors>damage states
 var dir: int = 1
+var target_velocity_x = 100
+const grav = 100
 @onready var sprite = $Sprite2D
 var parent: Node2D
 var frozen_move: bool = true
@@ -51,7 +53,7 @@ func _ready() -> void:
 	enemy_sprites.append(load_folder('res://images/light/blue/'))
 	$WallCheck.target_position = Vector2(32,0)
 	$FloorCheck.target_position = Vector2(45,40)
-	velocity.x = 100
+	velocity.x = target_velocity_x
 	#TODO: add dark variant
 	#(4 lives, different attacks once they attack)
 	#different color collision properties
@@ -61,10 +63,14 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if not frozen_move:
+		if not is_on_floor():
+			velocity.y = _delta*grav
+		velocity.x = target_velocity_x #fix for collisions affecting velocity
 		if $WallCheck.is_colliding() or (not $FloorCheck.is_colliding()):
 			dir *= -1
 			$WallCheck.target_position.x *= -1
 			$FloorCheck.target_position.x *= -1
 			velocity.x *= -1
+			target_velocity_x *= -1
 			print("switched dir to "+str(dir))
 		move_and_slide()
