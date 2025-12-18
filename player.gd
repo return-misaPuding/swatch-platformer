@@ -32,13 +32,26 @@ var target_scene_path: String
 var spawn: Node2D
 var main_parent: Node2D
 var lvl_manager_node: Node2D
+var child
+var varstr: String = ""
+
+func debug_print_child(par: Node2D,recurse:bool=false):
+	for i in range(par.get_child_count()):
+		child = par.get_child(i)
+		if not recurse:
+			varstr = "-   "
+		else:
+			varstr = ""
+		print(varstr+"#"+str(i)+" "+str(child.name)+"("+str(child)+")")
+		if recurse:
+			debug_print_child(child,false)
 
 func temp_death():
 	main_parent = get_parent()
-	print(get_parent)
 	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
 	if lvl_manager_node:
-		spawn = lvl_manager_node.get_child(0).get_node_or_null("PlayerSpawn")
+		debug_print_child(lvl_manager_node,true)
+		spawn = lvl_manager_node.get_child(0).get_node("PlayerSpawn")
 		if spawn:
 			self.global_position = spawn.global_position
 		else:

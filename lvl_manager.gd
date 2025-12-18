@@ -1,11 +1,11 @@
 extends Node2D
-const max_level = 2
+const max_level = 3
 var current_level = 1
 var target_scene_path: String
 var current_scene: Node2D = null
 var trigger: Signal
 var spawn: Node2D
-@onready var player = $Player
+@onready var player = get_parent().get_node_or_null("Player")
 signal player_null_velocity
 
 func level_advance():
