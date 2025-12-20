@@ -92,6 +92,7 @@ debug_skip_lvl={
 2d_physics/layer_3="red"
 2d_physics/layer_4="blue"
 2d_physics/layer_5="hazard"
+2d_physics/layer_6="player"
 
 [rendering]
 
