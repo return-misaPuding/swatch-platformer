@@ -34,6 +34,7 @@ var main_parent: Node2D
 var lvl_manager_node: Node2D
 var child
 var varstr: String = ""
+var next_knockback: bool = true
 
 func debug_print_child(par: Node2D,recurse:bool=false):
 	for i in range(par.get_child_count()):
@@ -47,7 +48,7 @@ func debug_print_child(par: Node2D,recurse:bool=false):
 			debug_print_child(child,false)
 
 func temp_death():
-	_on_cut_velocity()
+	_on_null_velocity()
 	main_parent = get_parent()
 	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
 	if lvl_manager_node:
@@ -64,12 +65,16 @@ func _on_null_velocity() -> void:
 	velocity = Vector2.ZERO
 	velocity.x = 0
 	velocity.y = 0
+	schedule_vel_x = 0
+	schedule_vel_y = 0
 
 func _on_cut_velocity(cut: int = 2) -> void:
 	if cut == 0:
 		cut = 2
 	velocity.x /= cut
 	velocity.y /= cut
+	schedule_vel_x /= cut
+	schedule_vel_y /= cut
 
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
@@ -77,7 +82,8 @@ func inv_col_mask(no_collide: int) -> int:
 	collision_mask = res
 	return res
 	
-func side_damage(body: Node2D):
+func side_damage(_body: Node2D):
+	next_knockback = false
 	temp_death()
 
 func _physics_process(delta: float) -> void:
@@ -149,7 +155,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	#print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
-		print("Y rel "+str(rel_vec.y))
+		#print("Y rel "+str(rel_vec.y))
 		print("player Y "+str(global_position.y)+" enemy Y "+str(body.global_position.y))
 		if global_position.y+30 < body.global_position.y:
 			body.hit_by_player_above()
@@ -160,16 +166,18 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	hitbox_disabled = true
 	hitboxcollide.set_deferred("disabled",true)
 	print(rel_vec) #debug position check
-	print("length "+str(rel_vec.length()))
-	rel_ratio_x = rel_vec.x/rel_vec.length()
-	rel_ratio_y = rel_vec.y/rel_vec.length()
+	#print("length "+str(rel_vec.length()))
+	rel_ratio_x = abs(snapped(rel_vec.x/rel_vec.length(),0.001))
+	rel_ratio_y = abs(snapped(rel_vec.y/rel_vec.length(),0.001))
 	sign_vec = rel_vec.normalized()
-	if body.is_in_group("knockback"): #protect against the first collision event @onready
-		schedule_vel_x += -sign_vec.x*SPEED*2.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
-		schedule_vel_y += -sign_vec.y*SPEED*0*rel_ratio_y #this ensures knockback
+	if body.is_in_group("knockback") and next_knockback: #protect against the first collision event @onready
+		schedule_vel_x += sign_vec.x*SPEED*2.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
+		print("x knockback "+str(schedule_vel_x)+" x ratio "+str(rel_ratio_x))
+		schedule_vel_y += sign_vec.y*SPEED*0*rel_ratio_y #this ensures knockback
 	if body.name == "TileMapLayer":
 		#temp_death()
 		pass #this triggers on any tile collision lmao
+	next_knockback = true
 
 func _on_hazardbox_entered(body: Node2D):
 	if body.name == "TileMapLayer":

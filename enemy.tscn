@@ -13,7 +13,8 @@ size = Vector2(49, 49)
 [node name="EnemyNode" type="Node2D"]
 script = ExtResource("1_qi2p4")
 
-[node name="SqEnemy" type="CharacterBody2D" parent="." groups=["hit", "knockback"]]
+[node name="SqEnemy" type="CharacterBody2D" parent="." groups=["hit", "knockback", "side_damage"]]
+collision_mask = 15
 script = ExtResource("1_7k104")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SqEnemy"]
@@ -29,6 +30,8 @@ shape = SubResource("RectangleShape2D_qi2p4")
 
 [node name="WallCheck" type="RayCast2D" parent="SqEnemy"]
 target_position = Vector2(32, 0)
+collision_mask = 15
 
 [node name="FloorCheck" type="RayCast2D" parent="SqEnemy"]
 target_position = Vector2(45, 40)
+collision_mask = 15

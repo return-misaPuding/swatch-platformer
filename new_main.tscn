@@ -72,7 +72,6 @@ shape = SubResource("RectangleShape2D_7qgpo")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, 1)
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
 
 [node name="Hitbox" type="Area2D" parent="Player"]
 
