@@ -27,7 +27,7 @@ func inv_col_mask(no_collide: int) -> int:
 	collision_mask = res
 	return res
 
-func hit_by_player_above():
+func hit_by_player_above(_body: Node2D):
 	if HP > 1:
 		sprite.texture = enemy_sprites[parent.enemy_color][HP-2]
 	else:
@@ -35,7 +35,7 @@ func hit_by_player_above():
 		return null
 	HP -= 1
 	print("enemy hit, "+str(HP)+" HP remaining")
-func hit_by_player():
+func hit_by_player(_body: Node2D):
 	pass
 	
 func load_folder(path: String) -> Array[Texture2D]:
@@ -69,6 +69,7 @@ func _ready() -> void:
 		collision_mask = inv_col_mask(mask_color)
 		$WallCheck.collision_mask = collision_mask
 		$FloorCheck.collision_mask = collision_mask
+		collision_layer = FULL_MASK-collision_mask
 	$WallCheck.target_position = Vector2(32,0)
 	$FloorCheck.target_position = Vector2(45,40)
 	velocity.x = target_velocity_x

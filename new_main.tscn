@@ -74,6 +74,7 @@ position = Vector2(0, 1)
 position_smoothing_enabled = true
 
 [node name="Hitbox" type="Area2D" parent="Player"]
+collision_layer = 32
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="Player/Hitbox"]
 position = Vector2(0, 1)

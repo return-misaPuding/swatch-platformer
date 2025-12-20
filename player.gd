@@ -83,8 +83,12 @@ func inv_col_mask(no_collide: int) -> int:
 	return res
 	
 func side_damage(_body: Node2D):
-	next_knockback = false
-	temp_death()
+	print("side damage from "+str(_body.mask_color)+" to my "+str(color_counter))
+	if (_body.mask_color != color_counter) or (_body.mask_color == 1):
+		next_knockback = false #mask_color is the CLS enum+1
+		temp_death()
+	else:
+		print("enemy "+str(_body.name)+" mask "+str(_body.collision_mask)+" layer "+str(_body.collision_layer)+" matches my mask "+str(collision_mask)+" layer "+str(collision_layer))
 
 func _physics_process(delta: float) -> void:
 	if first_frame:
@@ -137,6 +141,7 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("debug_skip_lvl"):
 		skip_to_level.emit(-1)
+	$Hitbox.collision_mask = collision_mask
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -160,11 +165,11 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		#print("Y rel "+str(rel_vec.y))
 		print("player Y "+str(global_position.y)+" enemy Y "+str(body.global_position.y))
 		if global_position.y+30 < body.global_position.y:
-			body.hit_by_player_above()
+			body.hit_by_player_above(self)
 		else:
 			if body.is_in_group("side_damage"):
 				side_damage(body)
-		body.hit_by_player()
+		body.hit_by_player(self)
 	hitbox_disabled = true
 	hitboxcollide.set_deferred("disabled",true)
 	print(rel_vec) #debug position check
