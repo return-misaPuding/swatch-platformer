@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dil7raqsxdn1s"]
+[gd_scene load_steps=16 format=3 uid="uid://dil7raqsxdn1s"]
 
 [ext_resource type="Script" uid="uid://brltw0m1gyax4" path="res://player.gd" id="1_4yy1f"]
 [ext_resource type="Script" uid="uid://sn6ujv73up73" path="res://lvl_manager.gd" id="3_2ss5u"]
@@ -42,10 +42,13 @@ width = 63
 height = 63
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7qgpo"]
-size = Vector2(63, 63)
+size = Vector2(62, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksskx"]
-size = Vector2(64, 64)
+size = Vector2(63, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5d015"]
+size = Vector2(63, 63)
 
 [node name="Node2D" type="Node2D"]
 
@@ -62,7 +65,6 @@ position = Vector2(0, 1)
 texture = SubResource("GradientTexture2D_qcw2d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_7qgpo")
 
@@ -72,14 +74,21 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
 [node name="Hitbox" type="Area2D" parent="Player"]
-collision_layer = 0
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="Player/Hitbox"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ksskx")
 
+[node name="HazardBox" type="Area2D" parent="Player"]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/HazardBox"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_5d015")
+
 [node name="LvlManager" type="Node2D" parent="."]
 script = ExtResource("3_2ss5u")
 
 [connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="Player/HazardBox" to="Player" method="_on_hazardbox_entered"]
 [connection signal="player_null_velocity" from="LvlManager" to="Player" method="_on_null_velocity"]

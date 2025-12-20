@@ -10,7 +10,7 @@ signal advance_level
 @onready var hitbox = $Hitbox
 @onready var hitboxcollide = $Hitbox/HitboxCollision
 @onready var current_level = 1
-const FULL_MASK = 0b1111
+const FULL_MASK = 0b11111
 const MAIN_SPEED = 350.0
 var SPEED = MAIN_SPEED
 const JUMP_VELOCITY = -500.0
@@ -135,6 +135,7 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
 	#rel = body.get_relative_transform_to_parent($Hitbox)
+	print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
 		print("Y rel "+str(rel_vec.y))
@@ -152,4 +153,9 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("knockback"): #protect against the first collision event @onready
 		schedule_vel_x += -sign_vec.x*SPEED*2.5*rel_ratio_x #negative of the sign pushes the player away from the enemy
 		schedule_vel_y += -sign_vec.y*SPEED*0*rel_ratio_y #this ensures knockback
-	print(body)
+	if body.name == "TileMapLayer":
+		#temp_death()
+		pass #this triggers on any tile collision lmao
+func _on_hazardbox_entered(body: Node2D):
+	if body.name == "TileMapLayer":
+		temp_death()
