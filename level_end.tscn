@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b1kydpyjiomyr" path="res://images/portal-tp.png" id="2_lmp1b"]
 
 [node name="LevelEnd" type="Area2D" groups=["portal"]]
-collision_mask = 33
+collision_mask = 47
 script = ExtResource("1_lmp1b")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

@@ -111,9 +111,11 @@ func _physics_process(delta: float) -> void:
 		else:
 			color_counter += 1
 		if color_counter == 1:
-			collision_mask = 0b1111 #make all color tiles collide
+			collision_mask = FULL_MASK #make all color tiles collide
+			collision_layer = 0b100000 #layer 6
 		else:
 			inv_col_mask(color_counter)
+			collision_layer = color_counter
 		sprite.texture = sprite_array[color_counter-1]
 		#print(color_counter)
 		#print(collision_mask)

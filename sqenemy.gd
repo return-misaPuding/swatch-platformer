@@ -4,9 +4,13 @@ var enemy_sprites: Array = [] #2D array of colors>damage states
 var dir: int = 1
 var target_velocity_x = 100
 const grav = 100
-@onready var sprite = $Sprite2D
+const FULL_MASK = 0b11111
+var sprite: Sprite2D
 var parent: Node2D
 var frozen_move: bool = true
+var mask_color: int = 1
+
+
 func enemy_die():
 	collision_layer = 0
 	collision_mask = 0
@@ -17,9 +21,15 @@ func enemy_die():
 	$CollisionShape2D.set_deferred("disabled",true)
 	call_deferred("queue_free")
 
+func inv_col_mask(no_collide: int) -> int:
+	var full = FULL_MASK
+	var res = full-2**(no_collide-1)
+	collision_mask = res
+	return res
+
 func hit_by_player_above():
 	if HP > 1:
-		sprite.texture = enemy_sprites[0][HP-2]
+		sprite.texture = enemy_sprites[parent.enemy_color][HP-2]
 	else:
 		enemy_die()
 		return null
@@ -42,7 +52,9 @@ func _on_enemy_hit():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	sprite = $Sprite2D
 	parent = get_parent()
+	mask_color = parent.enemy_color+1
 	if parent:
 		frozen_move = parent.freeze_move
 	else:
@@ -51,6 +63,12 @@ func _ready() -> void:
 	enemy_sprites.append(load_folder('res://images/light/yellow/'))
 	enemy_sprites.append(load_folder('res://images/light/red/'))
 	enemy_sprites.append(load_folder('res://images/light/blue/'))
+	print("color "+str(parent.enemy_color)+" "+str(int(parent.enemy_color)))
+	sprite.texture = enemy_sprites[parent.enemy_color][-1]
+	if mask_color > 1:
+		collision_mask = inv_col_mask(mask_color)
+		$WallCheck.collision_mask = collision_mask
+		$FloorCheck.collision_mask = collision_mask
 	$WallCheck.target_position = Vector2(32,0)
 	$FloorCheck.target_position = Vector2(45,40)
 	velocity.x = target_velocity_x
