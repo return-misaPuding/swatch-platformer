@@ -89,6 +89,7 @@ shape = SubResource("RectangleShape2D_5d015")
 [node name="LvlManager" type="Node2D" parent="."]
 script = ExtResource("3_2ss5u")
 
+[connection signal="skip_to_level" from="Player" to="LvlManager" method="_on_player_skip_to_level"]
 [connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Player/HazardBox" to="Player" method="_on_hazardbox_entered"]
 [connection signal="player_null_velocity" from="LvlManager" to="Player" method="_on_null_velocity"]

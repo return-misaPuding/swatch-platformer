@@ -1,5 +1,5 @@
 extends Node2D
-const max_level = 3
+const max_level = 4
 var current_level = 1
 var target_scene_path: String
 var current_scene: Node2D = null
@@ -8,10 +8,14 @@ var spawn: Node2D
 @onready var player = get_parent().get_node_or_null("Player")
 signal player_null_velocity
 
-func level_advance():
+func level_advance(adv: bool = true,tar: int = 1):
 	print("entered portal")
-	current_level += 1
-	target_scene_path = "res://lvl"+str(current_level)+".tscn"
+	if adv:
+		current_level += 1
+		target_scene_path = "res://lvl"+str(current_level)+".tscn"
+	else:
+		target_scene_path = "res://lvl"+str(tar)+".tscn"
+		current_level = tar
 	if current_level > max_level:
 		load_level("res://win.tscn")
 	else:
@@ -56,3 +60,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+
+func _on_player_skip_to_level(lvl: int) -> void:
+	if lvl < 1:
+		level_advance(false,max_level-1)
+	else:
+		level_advance(false,lvl)

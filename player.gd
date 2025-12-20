@@ -1,6 +1,6 @@
 extends CharacterBody2D
 signal enemy_hit
-signal advance_level
+signal skip_to_level(lvl: int)
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
 @export var blue_sprite: Texture2D
@@ -47,6 +47,7 @@ func debug_print_child(par: Node2D,recurse:bool=false):
 			debug_print_child(child,false)
 
 func temp_death():
+	_on_cut_velocity()
 	main_parent = get_parent()
 	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
 	if lvl_manager_node:
@@ -64,11 +65,20 @@ func _on_null_velocity() -> void:
 	velocity.x = 0
 	velocity.y = 0
 
+func _on_cut_velocity(cut: int = 2) -> void:
+	if cut == 0:
+		cut = 2
+	velocity.x /= cut
+	velocity.y /= cut
+
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
 	collision_mask = res
 	return res
+	
+func side_damage(body: Node2D):
+	temp_death()
 
 func _physics_process(delta: float) -> void:
 	if first_frame:
@@ -117,7 +127,8 @@ func _physics_process(delta: float) -> void:
 			collision_mask = FULL_MASK
 			sprite.texture = colorless_sprite #'punish' cancel spam by switching to colorless
 		
-	
+	if Input.is_action_just_pressed("debug_skip_lvl"):
+		skip_to_level.emit(-1)
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -135,13 +146,16 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
 	#rel = body.get_relative_transform_to_parent($Hitbox)
-	print("ouchie? "+str(body))
+	#print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
 		print("Y rel "+str(rel_vec.y))
 		print("player Y "+str(global_position.y)+" enemy Y "+str(body.global_position.y))
 		if global_position.y+30 < body.global_position.y:
 			body.hit_by_player_above()
+		else:
+			if body.is_in_group("side_damage"):
+				side_damage(body)
 		body.hit_by_player()
 	hitbox_disabled = true
 	hitboxcollide.set_deferred("disabled",true)
@@ -156,6 +170,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body.name == "TileMapLayer":
 		#temp_death()
 		pass #this triggers on any tile collision lmao
+
 func _on_hazardbox_entered(body: Node2D):
 	if body.name == "TileMapLayer":
 		temp_death()
