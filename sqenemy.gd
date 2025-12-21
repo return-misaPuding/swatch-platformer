@@ -24,7 +24,6 @@ func enemy_die():
 func inv_col_mask(no_collide: int) -> int:
 	var full = FULL_MASK
 	var res = full-2**(no_collide-1)
-	collision_mask = res
 	return res
 
 func hit_by_player_above(_body: Node2D):
@@ -91,5 +90,5 @@ func _process(_delta: float) -> void:
 			$FloorCheck.target_position.x *= -1
 			velocity.x *= -1
 			target_velocity_x *= -1
-			print("switched dir to "+str(dir))
+			#print("switched dir to "+str(dir))
 		move_and_slide()
