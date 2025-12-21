@@ -35,7 +35,8 @@ var lvl_manager_node: Node2D
 var child
 var varstr: String = ""
 var next_knockback: bool = true
-var elev_layer = 6
+var elev_layer = 6 #layer the player resides on
+#always color_counter+5
 func debug_print_child(par: Node2D,recurse:bool=false):
 	for i in range(par.get_child_count()):
 		child = par.get_child(i)
@@ -113,12 +114,13 @@ func _physics_process(delta: float) -> void:
 			color_counter = 1 #overflow behavior
 		else:
 			color_counter += 1
+		elev_layer = color_counter+5
 		if color_counter == 1:
 			collision_mask = FULL_MASK #make all color tiles collide
 			collision_layer = 0b100000 #layer 6
 		else:
 			collision_mask = inv_col_mask(color_counter)
-			collision_layer = FULL_MASK-collision_mask
+			collision_layer = FULL_MASK-inv_col_mask(elev_layer)
 		sprite.texture = sprite_array[color_counter-1]
 		#print(color_counter)
 		#print(collision_mask)
