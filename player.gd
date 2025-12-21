@@ -141,6 +141,8 @@ func _physics_process(delta: float) -> void:
 			sprite.texture = colorless_sprite #'punish' cancel spam by switching to colorless
 		
 	if Input.is_action_just_pressed("debug_skip_lvl"):
+		skip_to_level.emit(-2)
+	if Input.is_action_just_pressed("debug_skip_lvl_before"):
 		skip_to_level.emit(-1)
 	$Hitbox.collision_mask = collision_mask
 	# Get the input direction and handle the movement/deceleration.

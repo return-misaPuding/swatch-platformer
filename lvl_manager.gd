@@ -1,5 +1,5 @@
 extends Node2D
-const max_level = 4
+const max_level = 5
 var current_level = 1
 var target_scene_path: String
 var current_scene: Node2D = null
@@ -63,7 +63,9 @@ func _process(_delta: float) -> void:
 
 
 func _on_player_skip_to_level(lvl: int) -> void:
-	if lvl < 1:
+	if lvl < -1:
+		level_advance(false,max_level)
+	elif lvl < 1:
 		level_advance(false,max_level-1)
 	else:
 		level_advance(false,lvl)

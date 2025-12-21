@@ -49,6 +49,13 @@ func load_folder(path: String) -> Array[Texture2D]:
 func _on_enemy_hit():
 	print("hit signal")
 
+func swap_dir():
+	dir *= -1
+	$WallCheck.target_position.x *= -1
+	$FloorCheck.target_position.x *= -1
+	velocity.x *= -1
+	target_velocity_x *= -1
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	sprite = $Sprite2D
@@ -72,6 +79,8 @@ func _ready() -> void:
 	$WallCheck.target_position = Vector2(32,0)
 	$FloorCheck.target_position = Vector2(45,40)
 	velocity.x = target_velocity_x
+	if parent.reverse_start_dir:
+		swap_dir()
 	#TODO: add dark variant
 	#(4 lives, different attacks once they attack)
 	#different color collision properties
@@ -85,10 +94,6 @@ func _process(_delta: float) -> void:
 			velocity.y = _delta*grav
 		velocity.x = target_velocity_x #fix for collisions affecting velocity
 		if $WallCheck.is_colliding() or (not $FloorCheck.is_colliding()):
-			dir *= -1
-			$WallCheck.target_position.x *= -1
-			$FloorCheck.target_position.x *= -1
-			velocity.x *= -1
-			target_velocity_x *= -1
+			swap_dir()
 			#print("switched dir to "+str(dir))
 		move_and_slide()

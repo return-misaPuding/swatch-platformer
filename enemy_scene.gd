@@ -7,6 +7,7 @@ enum CLR {
 }
 @export var freeze_move: bool
 @export var enemy_color: CLR
+@export var reverse_start_dir: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
