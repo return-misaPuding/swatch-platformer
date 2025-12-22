@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4gslrfd36ukf"]
+[gd_scene load_steps=4 format=3 uid="uid://b4gslrfd36ukf"]
 
 [ext_resource type="Script" uid="uid://dvogpvgbcjkdf" path="res://ckpt-scene.gd" id="1_25fd6"]
+[ext_resource type="Texture2D" uid="uid://worgvfbiwq1w" path="res://images/long-ckpt-bg.png" id="2_him41"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ktpi8"]
-size = Vector2(192, 64)
+size = Vector2(256, 64)
 
 [node name="ckpt" type="Area2D" groups=["ckpt"]]
-collision_layer = 16
+collision_layer = 17
 collision_mask = 480
 script = ExtResource("1_25fd6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_him41")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ktpi8")

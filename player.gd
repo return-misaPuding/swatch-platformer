@@ -1,5 +1,4 @@
 extends CharacterBody2D
-signal enemy_hit
 signal skip_to_level(lvl: int)
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
@@ -14,7 +13,11 @@ const FULL_MASK = 0b11111
 const MAIN_SPEED = 350.0
 var SPEED = MAIN_SPEED
 const JUMP_VELOCITY = -500.0
-const KILL_Y = 16*150
+const KILL_Y = 32*75
+const DEBUG_ABILITY = true
+const POWER_DEBUG = (true and DEBUG_ABILITY)
+var debug_god_mode: bool = false
+var debug_last_skipped_ckpt: int = 0
 var double_jump = 2
 var velocity_cancel_charge = 3
 const COLOR_STOP = 4
@@ -39,14 +42,20 @@ var elev_layer = 6 #layer the player resides on
 #always color_counter+5
 var ckpt_last = 0
 var ckpt_pos = null
+var listed_ckpt: Array = []
 
 func ckpt_set():
 	await get_tree().process_frame
 	ckpt_pos = temp_death(false)
+	ckpt_last = 0
+	listed_ckpt = list_in_group()
+	debug_last_skipped_ckpt = 0
 
 func _ready():
 	await get_tree().process_frame #game crashes without this. get your act together godot
 	ckpt_pos = temp_death(false) #this just returns the spawn.global_position
+	listed_ckpt = list_in_group()
+	print("Ready (Player One)")
 
 func debug_print_child(par: Node2D,recurse:bool=false):
 	for i in range(par.get_child_count()):
@@ -61,6 +70,8 @@ func debug_print_child(par: Node2D,recurse:bool=false):
 
 func temp_death(setcoord: bool = true):
 	var res_pos = null
+	if setcoord and (debug_god_mode and global_position.y < KILL_Y):
+		setcoord = false #godmode doesn't work when falling down
 	if setcoord:
 		_on_null_velocity()
 	main_parent = get_parent()
@@ -101,6 +112,25 @@ func inv_col_mask(no_collide: int) -> int:
 	var res = full-2**(no_collide-1)
 	return res
 	
+func list_in_group(group_name: String = "ckpt") -> Array:
+	var res = []
+	var lvl_manager = get_parent().get_node_or_null("LvlManager")
+	var lvl: Node2D
+	if lvl_manager != null:
+		lvl = lvl_manager.get_child(0)
+	else:
+		print("where lvl_manager")
+		return []
+	print("getting group "+group_name)
+	if lvl != null:
+		for i in range(lvl.get_child_count()):
+			if lvl.get_child(i).is_in_group(group_name):
+				res.append(lvl.get_child(i))
+				print("    "+lvl.get_child(i).name)
+	else:
+		print("where lvl")
+	return res
+
 func side_damage(_body: Node2D):
 	print("side damage from "+str(_body.mask_color)+" to my "+str(color_counter))
 	if (_body.mask_color != color_counter) or (_body.mask_color == 1):
@@ -159,10 +189,21 @@ func _physics_process(delta: float) -> void:
 			collision_mask = FULL_MASK
 			sprite.texture = colorless_sprite #'punish' cancel spam by switching to colorless
 		
-	if Input.is_action_just_pressed("debug_skip_lvl"):
+	if Input.is_action_just_pressed("debug_god_mode") and POWER_DEBUG:
+		debug_god_mode = !debug_god_mode
+		print("debug mode set to "+str(debug_god_mode))
+	if Input.is_action_just_pressed("debug_skip_lvl") and POWER_DEBUG:
 		skip_to_level.emit(-2)
-	if Input.is_action_just_pressed("debug_skip_lvl_before"):
+	if Input.is_action_just_pressed("debug_skip_lvl_before") and DEBUG_ABILITY:
 		skip_to_level.emit(-1)
+	if Input.is_action_just_pressed("debug_next_ckpt") and DEBUG_ABILITY:
+		if debug_last_skipped_ckpt < len(listed_ckpt) and debug_last_skipped_ckpt >= 0:
+			global_position = listed_ckpt[debug_last_skipped_ckpt].global_position
+			debug_last_skipped_ckpt += 1
+			print("succesful debug teleport to ckpt")
+		else:
+			debug_last_skipped_ckpt -= 1
+			print("failed to teleport")
 	$Hitbox.collision_mask = collision_mask
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -209,6 +250,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	next_knockback = true
 	
 func _on_hitbox_area_entered(area: Area2D):
+	print("area enter "+str(area.name)+" "+str(area.get_groups()))
 	if area.is_in_group("ckpt"):
 		ckpt_pos = area.global_position
 		ckpt_last = area.ckpt_id
