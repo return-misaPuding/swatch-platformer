@@ -150,7 +150,7 @@ func _physics_process(delta: float) -> void:
 		hitbox_disabled = false
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity()*delta
 	else:
 		double_jump = 2
 		velocity_cancel_charge = 3

@@ -3,7 +3,7 @@ var HP = 9
 var enemy_sprites: Array = [] #2D array of colors>damage states
 var dir: int = 1
 var target_velocity_x = 100
-const grav = 100
+const grav = 25
 const FULL_MASK = 0b11111
 var sprite: Sprite2D
 var parent: Node2D
@@ -91,7 +91,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not frozen_move:
 		if not is_on_floor():
-			velocity.y = _delta*grav
+			velocity.y += grav*_delta
 		velocity.x = target_velocity_x #fix for collisions affecting velocity
 		if $WallCheck.is_colliding() or (not $FloorCheck.is_colliding()):
 			swap_dir()
