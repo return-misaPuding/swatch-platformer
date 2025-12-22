@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4gslrfd36ukf"]
+
+[ext_resource type="Script" uid="uid://dvogpvgbcjkdf" path="res://ckpt-scene.gd" id="1_25fd6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktpi8"]
+size = Vector2(192, 64)
+
+[node name="ckpt" type="Area2D" groups=["ckpt"]]
+collision_layer = 16
+collision_mask = 480
+script = ExtResource("1_25fd6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ktpi8")

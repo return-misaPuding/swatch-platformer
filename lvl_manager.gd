@@ -38,6 +38,7 @@ func load_level(path: String):
 	player = current_scene.get_tree().get_nodes_in_group("playergroup")[0]
 	if spawn and player:
 		player.global_position = spawn.global_position
+		player.ckpt_set()
 	else:
 		print("no exist? :(")
 		print(player)

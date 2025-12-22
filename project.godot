@@ -26,6 +26,7 @@ hit=""
 portal=""
 knockback="causes knockback to player"
 side_damage=""
+ckpt=""
 
 [input]
 

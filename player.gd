@@ -37,6 +37,17 @@ var varstr: String = ""
 var next_knockback: bool = true
 var elev_layer = 6 #layer the player resides on
 #always color_counter+5
+var ckpt_last = 0
+var ckpt_pos = null
+
+func ckpt_set():
+	await get_tree().process_frame
+	ckpt_pos = temp_death(false)
+
+func _ready():
+	await get_tree().process_frame #game crashes without this. get your act together godot
+	ckpt_pos = temp_death(false) #this just returns the spawn.global_position
+
 func debug_print_child(par: Node2D,recurse:bool=false):
 	for i in range(par.get_child_count()):
 		child = par.get_child(i)
@@ -48,19 +59,27 @@ func debug_print_child(par: Node2D,recurse:bool=false):
 		if recurse:
 			debug_print_child(child,false)
 
-func temp_death():
-	_on_null_velocity()
+func temp_death(setcoord: bool = true):
+	var res_pos = null
+	if setcoord:
+		_on_null_velocity()
 	main_parent = get_parent()
 	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
 	if lvl_manager_node:
 		debug_print_child(lvl_manager_node,true)
 		spawn = lvl_manager_node.get_child(0).get_node("PlayerSpawn")
 		if spawn:
-			self.global_position = spawn.global_position
+			res_pos = spawn.global_position
 		else:
 			print("where spawn")
 	else:
 		print("where LvlManager")
+	if setcoord and ckpt_pos != null:
+		global_position = ckpt_pos
+	elif setcoord and res_pos != null:
+		print("ckpt_pos is null")
+		global_position = res_pos
+	return res_pos
 		
 func _on_null_velocity() -> void:
 	velocity = Vector2.ZERO
@@ -162,7 +181,7 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
 	#rel = body.get_relative_transform_to_parent($Hitbox)
-	#print("ouchie? "+str(body))
+	print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
 		#print("Y rel "+str(rel_vec.y))
@@ -188,6 +207,12 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		#temp_death()
 		pass #this triggers on any tile collision lmao
 	next_knockback = true
+	
+func _on_hitbox_area_entered(area: Area2D):
+	if area.is_in_group("ckpt"):
+		ckpt_pos = area.global_position
+		ckpt_last = area.ckpt_id
+		area.queue_free()
 
 func _on_hazardbox_entered(body: Node2D):
 	if body.name == "TileMapLayer":

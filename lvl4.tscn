@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dxkupa35owhqg"]
+[gd_scene load_steps=6 format=4 uid="uid://dxkupa35owhqg"]
 
 [ext_resource type="TileSet" uid="uid://bp5q6hfux3as0" path="res://lvl1.tres" id="1_ontn7"]
 [ext_resource type="PackedScene" uid="uid://buld3bcp0l0s7" path="res://enemy.tscn" id="2_barog"]
 [ext_resource type="PackedScene" uid="uid://baq2crvjf2cf2" path="res://level_end.tscn" id="3_r2aow"]
 [ext_resource type="LabelSettings" uid="uid://cqkk6qdhdnxxn" path="res://label.tres" id="4_8muly"]
+[ext_resource type="PackedScene" uid="uid://b4gslrfd36ukf" path="res://ckpt.tscn" id="5_ytcif"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -39,3 +40,6 @@ offset_bottom = -34.0
 text = "Press Q to cancel
 your momentum"
 label_settings = ExtResource("4_8muly")
+
+[node name="ckpt" parent="." instance=ExtResource("5_ytcif")]
+position = Vector2(848, 112)
