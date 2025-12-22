@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dye06b6qk4rfr"
-path="res://.godot/imported/maptile-yellow.png-b1f77506156a03d3e456234f5c5e8cc9.ctex"
+uid="uid://ch04ggkftjdxh"
+path="res://.godot/imported/long-flag.png-62c14b6c9986378343d9288ec091549d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/maptile-yellow.png"
-dest_files=["res://.godot/imported/maptile-yellow.png-b1f77506156a03d3e456234f5c5e8cc9.ctex"]
+source_file="res://images/long-flag.png"
+dest_files=["res://.godot/imported/long-flag.png-62c14b6c9986378343d9288ec091549d.ctex"]
 
 [params]
 

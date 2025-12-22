@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf17l4o45vfpl"
-path="res://.godot/imported/maptile-gray.png-003f3c613d036e5a25dec92827a79446.ctex"
+uid="uid://dhrtpshb06un4"
+path="res://.godot/imported/long-ckpt.png-38a54ed492fd5f4991bbe4a22c616932.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/maptile-gray.png"
-dest_files=["res://.godot/imported/maptile-gray.png-003f3c613d036e5a25dec92827a79446.ctex"]
+source_file="res://images/long-ckpt.png"
+dest_files=["res://.godot/imported/long-ckpt.png-38a54ed492fd5f4991bbe4a22c616932.ctex"]
 
 [params]
 
