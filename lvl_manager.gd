@@ -1,5 +1,5 @@
 extends Node2D
-const max_level = 5
+const max_level = 6
 var current_level = 1
 var target_scene_path: String
 var current_scene: Node2D = null

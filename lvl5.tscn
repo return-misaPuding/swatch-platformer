@@ -56,3 +56,6 @@ enemy_color = 1
 [node name="C8-2" parent="." instance=ExtResource("2_j6gly")]
 position = Vector2(874, 1797)
 enemy_color = 3
+
+[node name="C9-1" parent="." instance=ExtResource("2_j6gly")]
+position = Vector2(1248, 1795)
