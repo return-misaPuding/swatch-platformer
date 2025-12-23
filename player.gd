@@ -222,7 +222,7 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
 	#rel = body.get_relative_transform_to_parent($Hitbox)
-	print("ouchie? "+str(body))
+	#print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
 		#print("Y rel "+str(rel_vec.y))
@@ -235,7 +235,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		body.hit_by_player(self)
 	hitbox_disabled = true
 	hitboxcollide.set_deferred("disabled",true)
-	print(rel_vec) #debug position check
+	#print(rel_vec)
+	#debug position check
 	#print("length "+str(rel_vec.length()))
 	rel_ratio_x = abs(snapped(rel_vec.x/rel_vec.length(),0.001))
 	rel_ratio_y = abs(snapped(rel_vec.y/rel_vec.length(),0.001))
