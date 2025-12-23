@@ -222,7 +222,7 @@ func _physics_process(delta: float) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	#enemy_hit.emit()
 	#rel = body.get_relative_transform_to_parent($Hitbox)
-	#print("ouchie? "+str(body))
+	print("ouchie? "+str(body))
 	rel_vec = global_position - body.global_position
 	if body.is_in_group("hit"):
 		#print("Y rel "+str(rel_vec.y))
@@ -260,3 +260,7 @@ func _on_hitbox_area_entered(area: Area2D):
 func _on_hazardbox_entered(body: Node2D):
 	if body.name == "TileMapLayer":
 		temp_death()
+func _on_bouncebox_entered(body: Node2D):
+	print("bouncebox enter "+body.name)
+	if body.name == "TileMapLayer":
+		velocity.y += JUMP_VELOCITY*1.6

@@ -119,6 +119,7 @@ hover={
 2d_physics/layer_4="blue"
 2d_physics/layer_5="hazard"
 2d_physics/layer_6="player"
+2d_physics/layer_10="bounce"
 
 [rendering]
 
