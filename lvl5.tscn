@@ -41,6 +41,7 @@ position = Vector2(722, 642)
 
 [node name="ckpt2" parent="." instance=ExtResource("3_plkr0")]
 position = Vector2(64, 960)
+ckpt_id = 2
 
 [node name="LevelEnd" parent="." instance=ExtResource("4_haihv")]
 position = Vector2(1760, 1655)

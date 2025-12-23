@@ -19,6 +19,7 @@ rotation = -1.5707964
 [node name="ckpt2" parent="." instance=ExtResource("2_2pk3l")]
 position = Vector2(4064, -896)
 rotation = -1.5707964
+ckpt_id = 2
 
 [node name="LevelEnd" parent="." instance=ExtResource("3_olqy7")]
 position = Vector2(7168, -1340)
