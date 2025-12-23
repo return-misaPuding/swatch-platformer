@@ -22,4 +22,4 @@ rotation = -1.5707964
 ckpt_id = 2
 
 [node name="LevelEnd" parent="." instance=ExtResource("3_olqy7")]
-position = Vector2(7168, -1340)
+position = Vector2(8288, -1341)

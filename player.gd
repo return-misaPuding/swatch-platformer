@@ -263,4 +263,4 @@ func _on_hazardbox_entered(body: Node2D):
 func _on_bouncebox_entered(body: Node2D):
 	print("bouncebox enter "+body.name)
 	if body.name == "TileMapLayer":
-		velocity.y += JUMP_VELOCITY*1.6
+		velocity.y += JUMP_VELOCITY*1.65
