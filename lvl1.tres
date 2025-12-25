@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://bp5q6hfux3as0"]
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://bp5q6hfux3as0"]
 
 [ext_resource type="Texture2D" uid="uid://ciibgfipr2f6q" path="res://images/maptile32-gray.png" id="1_ckjw1"]
 [ext_resource type="Texture2D" uid="uid://bkuldwaxkpwqo" path="res://images/maptile32-dark.png" id="2_8refm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cr045l41hh12d" path="res://images/maptile32-red.png" id="4_o2jpf"]
 [ext_resource type="Texture2D" uid="uid://bw1h7fdvj0rca" path="res://images/maptile32-blue.png" id="5_khbjh"]
 [ext_resource type="Texture2D" uid="uid://boxxbd1xpal04" path="res://images/maptile32-bounce.png" id="7_52rpy"]
+[ext_resource type="Texture2D" uid="uid://bwevaa7teyg01" path="res://images/maptile32-invisible-marker.png" id="8_o2jpf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0xm2m"]
 texture = ExtResource("1_ckjw1")
@@ -50,6 +51,11 @@ texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_5/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_khbjh"]
+texture = ExtResource("8_o2jpf")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
 [resource]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
@@ -71,3 +77,4 @@ sources/4 = SubResource("TileSetAtlasSource_7mycd")
 sources/5 = SubResource("TileSetAtlasSource_272bh")
 sources/2 = SubResource("TileSetAtlasSource_52rpy")
 sources/6 = SubResource("TileSetAtlasSource_o2jpf")
+sources/7 = SubResource("TileSetAtlasSource_khbjh")
