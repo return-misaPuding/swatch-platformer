@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=4 uid="uid://dy2t527q8e8qd"]
+[gd_scene load_steps=5 format=4 uid="uid://dy2t527q8e8qd"]
 
 [ext_resource type="TileSet" uid="uid://bp5q6hfux3as0" path="res://lvl1.tres" id="1_wao2c"]
+[ext_resource type="Texture2D" uid="uid://60i6ijhe0q53" path="res://images/long-flag-bg.png" id="2_hgi8f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wao2c"]
 font_size = 44
@@ -33,3 +34,8 @@ offset_right = 191.0
 offset_bottom = -36.0
 text = "Now you're trapped in this peculiar bowl >:3"
 label_settings = SubResource("LabelSettings_hgi8f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(0, -288)
+texture = ExtResource("2_hgi8f")

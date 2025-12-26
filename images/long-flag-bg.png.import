@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch04ggkftjdxh"
-path="res://.godot/imported/long-flag.png-62c14b6c9986378343d9288ec091549d.ctex"
+uid="uid://60i6ijhe0q53"
+path="res://.godot/imported/long-flag-bg.png-8c59020175d5c6803c3937f341bae30f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/long-flag.png"
-dest_files=["res://.godot/imported/long-flag.png-62c14b6c9986378343d9288ec091549d.ctex"]
+source_file="res://images/long-flag-bg.png"
+dest_files=["res://.godot/imported/long-flag-bg.png-8c59020175d5c6803c3937f341bae30f.ctex"]
 
 [params]
 
