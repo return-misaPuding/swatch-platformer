@@ -192,6 +192,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("debug_god_mode") and POWER_DEBUG:
 		debug_god_mode = !debug_god_mode
 		print("debug mode set to "+str(debug_god_mode))
+	if Input.is_action_just_pressed("debug_skip_one_lvl") and POWER_DEBUG:
+		skip_to_level.emit(0)
 	if Input.is_action_just_pressed("debug_skip_lvl") and POWER_DEBUG:
 		skip_to_level.emit(-2)
 	if Input.is_action_just_pressed("debug_skip_lvl_before") and DEBUG_ABILITY:

@@ -66,7 +66,9 @@ func _process(_delta: float) -> void:
 func _on_player_skip_to_level(lvl: int) -> void:
 	if lvl < -1:
 		level_advance(false,max_level)
-	elif lvl < 1:
+	elif lvl < 0:
 		level_advance(false,max_level-1)
+	elif lvl < 1:
+		level_advance()
 	else:
 		level_advance(false,lvl)
