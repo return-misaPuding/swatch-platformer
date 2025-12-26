@@ -34,3 +34,6 @@ Having the same color as a block or an enemy will make you \"blend in\", letting
 label_settings = ExtResource("3_p65l6")
 horizontal_alignment = 3
 autowrap_mode = 2
+
+[node name="BgLayer" type="TileMapLayer" parent="."]
+z_index = -15
