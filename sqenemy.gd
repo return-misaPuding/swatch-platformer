@@ -9,6 +9,46 @@ var sprite: Sprite2D
 var parent: Node2D
 var frozen_move: bool = true
 var mask_color: int = 1
+const enemy_sprites_2 = [
+	[
+		preload("res://images/light/normal/enemylight-normal-dmg1.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg2.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg3.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg4.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg5.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg6.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg7.png"),
+		preload("res://images/light/normal/enemylight-normal-dmg8.png"),
+		preload("res://images/light/normal/enemylight-normal.png"),
+	], [preload("res://images/light/yellow/enemylight-normal-dmg1.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg2.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg3.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg4.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg5.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg6.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg7.png"),
+		preload("res://images/light/yellow/enemylight-normal-dmg8.png"),
+		preload("res://images/light/yellow/enemylight-normal.png"),
+	], [preload("res://images/light/red/enemylight-normal-dmg1.png"),
+		preload("res://images/light/red/enemylight-normal-dmg2.png"),
+		preload("res://images/light/red/enemylight-normal-dmg3.png"),
+		preload("res://images/light/red/enemylight-normal-dmg4.png"),
+		preload("res://images/light/red/enemylight-normal-dmg5.png"),
+		preload("res://images/light/red/enemylight-normal-dmg6.png"),
+		preload("res://images/light/red/enemylight-normal-dmg7.png"),
+		preload("res://images/light/red/enemylight-normal-dmg8.png"),
+		preload("res://images/light/red/enemylight-normal.png")
+	], [preload("res://images/light/blue/enemylight-normal-dmg1.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg2.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg3.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg4.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg5.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg6.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg7.png"),
+		preload("res://images/light/blue/enemylight-normal-dmg8.png"),
+		preload("res://images/light/blue/enemylight-normal.png")
+	],
+]
 
 
 func enemy_die():
@@ -41,7 +81,7 @@ func load_folder(path: String) -> Array[Texture2D]:
 	var file_textures: Array[Texture2D] = []
 	for file in DirAccess.get_files_at(path):
 		if file.ends_with(".png"):
-			#print("loading "+path+file)
+			print("loading "+path+file)
 			file_textures.append(load(path+file))
 	print(str(len(file_textures)))
 	return file_textures
@@ -65,10 +105,13 @@ func _ready() -> void:
 		frozen_move = parent.freeze_move
 	else:
 		print("parent property frozen_move not found")
-	enemy_sprites.append(load_folder('res://images/light/normal/'))
-	enemy_sprites.append(load_folder('res://images/light/yellow/'))
-	enemy_sprites.append(load_folder('res://images/light/red/'))
-	enemy_sprites.append(load_folder('res://images/light/blue/'))
+	if false: #load_folder() uses load() which is dynamic, this breaks all exports
+		enemy_sprites.append(load_folder('res://images/light/normal/'))
+		enemy_sprites.append(load_folder('res://images/light/yellow/'))
+		enemy_sprites.append(load_folder('res://images/light/red/'))
+		enemy_sprites.append(load_folder('res://images/light/blue/'))
+	enemy_sprites = enemy_sprites_2
+	#preloaded array
 	print("color "+str(parent.enemy_color)+" "+str(int(parent.enemy_color)))
 	sprite.texture = enemy_sprites[parent.enemy_color][-1]
 	if mask_color > 1:
