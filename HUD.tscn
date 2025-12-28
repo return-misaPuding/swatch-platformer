@@ -1,25 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvpb1unh17h3m"]
+[gd_scene load_steps=8 format=3 uid="uid://dvpb1unh17h3m"]
 
 [ext_resource type="Script" uid="uid://pcu0nanyscq5" path="res://hud.gd" id="1_efote"]
 [ext_resource type="LabelSettings" uid="uid://y871gnlrx4vk" path="res://HUD.tres" id="1_k5de2"]
 [ext_resource type="Texture2D" uid="uid://w67oacecr6ph" path="res://images/maptile32-bg-grid.png" id="3_vow1y"]
 [ext_resource type="Texture2D" uid="uid://dw0fr3g37g4kt" path="res://images/maptile32-pan.png" id="4_ne771"]
 [ext_resource type="Texture2D" uid="uid://dpt0dtgs446xk" path="res://images/maptile32-fluid.png" id="5_xxqia"]
+[ext_resource type="FontFile" uid="uid://b2cxh82lr1lmb" path="res://Xolonium-Regular.ttf" id="6_gv1iq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1and6"]
+font = ExtResource("6_gv1iq")
+font_size = 24
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_efote")
 
 [node name="GlobalTime" type="Label" parent="."]
-offset_left = 126.0
-offset_top = 40.0
-offset_right = 284.0
-offset_bottom = 77.0
+offset_left = 134.0
+offset_top = 48.0
+offset_right = 292.0
+offset_bottom = 85.0
 text = "00:00.0"
 label_settings = ExtResource("1_k5de2")
 
 [node name="LvlTime" type="Label" parent="."]
-offset_right = 285.0
-offset_bottom = 37.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 293.0
+offset_bottom = 45.0
 text = "LVL1: 00:00.0"
 label_settings = ExtResource("1_k5de2")
 
@@ -27,8 +34,10 @@ label_settings = ExtResource("1_k5de2")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -84.0
-offset_bottom = 37.0
+offset_left = -92.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 45.0
 grow_horizontal = 0
 text = "000"
 label_settings = ExtResource("1_k5de2")
@@ -41,9 +50,10 @@ texture = ExtResource("3_vow1y")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -84.0
-offset_top = 40.0
-offset_bottom = 77.0
+offset_left = -92.0
+offset_top = 48.0
+offset_right = -8.0
+offset_bottom = 85.0
 grow_horizontal = 0
 text = "000"
 label_settings = ExtResource("1_k5de2")
@@ -56,9 +66,10 @@ texture = ExtResource("4_ne771")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -84.0
-offset_top = 80.0
-offset_bottom = 117.0
+offset_left = -92.0
+offset_top = 88.0
+offset_right = -8.0
+offset_bottom = 125.0
 grow_horizontal = 0
 text = "000"
 label_settings = ExtResource("1_k5de2")
@@ -66,3 +77,23 @@ label_settings = ExtResource("1_k5de2")
 [node name="CkptSprite" type="Sprite2D" parent="Ckpt"]
 position = Vector2(-27, 16)
 texture = ExtResource("5_xxqia")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -278.0
+offset_top = 16.0
+offset_right = -104.0
+offset_bottom = 53.0
+grow_horizontal = 0
+text = "DEATHS:"
+label_settings = SubResource("LabelSettings_1and6")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 103.0
+offset_bottom = 85.0
+text = "RUN:"
+label_settings = ExtResource("1_k5de2")
