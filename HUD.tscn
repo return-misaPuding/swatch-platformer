@@ -24,36 +24,45 @@ text = "LVL1: 00:00.0"
 label_settings = ExtResource("1_k5de2")
 
 [node name="Total" type="Label" parent="."]
-offset_left = 1064.0
-offset_right = 1148.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
 offset_bottom = 37.0
+grow_horizontal = 0
 text = "000"
 label_settings = ExtResource("1_k5de2")
 
-[node name="Level" type="Label" parent="."]
-offset_left = 1064.0
-offset_top = 40.0
-offset_right = 1148.0
-offset_bottom = 77.0
-text = "000"
-label_settings = ExtResource("1_k5de2")
-
-[node name="Ckpt" type="Label" parent="."]
-offset_left = 1064.0
-offset_top = 80.0
-offset_right = 1148.0
-offset_bottom = 117.0
-text = "000"
-label_settings = ExtResource("1_k5de2")
-
-[node name="TotalSprite" type="Sprite2D" parent="."]
-position = Vector2(1041, 16)
+[node name="TotalSprite" type="Sprite2D" parent="Total"]
+position = Vector2(-27, 16)
 texture = ExtResource("3_vow1y")
 
-[node name="LevelSprite" type="Sprite2D" parent="."]
-position = Vector2(1041, 56)
+[node name="Level" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
+offset_top = 40.0
+offset_bottom = 77.0
+grow_horizontal = 0
+text = "000"
+label_settings = ExtResource("1_k5de2")
+
+[node name="LevelSprite" type="Sprite2D" parent="Level"]
+position = Vector2(-27, 16)
 texture = ExtResource("4_ne771")
 
-[node name="CkptSprite" type="Sprite2D" parent="."]
-position = Vector2(1041, 96)
+[node name="Ckpt" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -84.0
+offset_top = 80.0
+offset_bottom = 117.0
+grow_horizontal = 0
+text = "000"
+label_settings = ExtResource("1_k5de2")
+
+[node name="CkptSprite" type="Sprite2D" parent="Ckpt"]
+position = Vector2(-27, 16)
 texture = ExtResource("5_xxqia")

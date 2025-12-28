@@ -32,10 +32,10 @@ func _on_player_display_time(lvl: Array, full: Array,current_lvl_number: int) ->
 func _on_player_display_death(total: int, lvl: int, ckpt: int, show_ckpt: bool) -> void:
 	if !show_ckpt:
 		$Ckpt.show() # i entered the boolean wrong in my signal emit events
-		$CkptSprite.show()
+		$Ckpt.get_node("CkptSprite").show()
 	else:
 		$Ckpt.hide()
-		$CkptSprite.hide()
+		$Ckpt.get_node("CkptSprite").hide()
 	$Total.text = str(total)
 	$Level.text = str(lvl)
 	$Ckpt.text = str(ckpt)
