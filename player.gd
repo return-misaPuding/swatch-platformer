@@ -1,5 +1,6 @@
 extends CharacterBody2D
 signal skip_to_level(lvl: int)
+signal display_time(lvl: Array[int],full: Array[int],current_lvl_num: int)
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
 @export var blue_sprite: Texture2D
@@ -23,6 +24,7 @@ var velocity_cancel_charge = 3
 const COLOR_STOP = 4
 var color_counter = 1
 var first_frame = true
+var timer_started = false
 var hitbox_disabled = false
 var rel: Transform2D
 var rel_vec: Vector2
@@ -43,18 +45,30 @@ var elev_layer = 6 #layer the player resides on
 var ckpt_last = 0
 var ckpt_pos = null
 var listed_ckpt: Array = []
-
-func ckpt_set():
+var death_this_lvl: int = 0
+var death_this_ckpt: int = 0
+var time_min: int = 0
+var time_sec: int = 0
+var time_dec: int = 0 #one tenth of a second
+var full_time_base: int = 0
+var full_time_dec: int = 0
+var full_time_sec: int = 0
+var full_time_min: int = 0
+var current_lvl_stored: int = 1
+func ckpt_set(lvl = current_lvl_stored): #this is just "on new level entered by now"
 	await get_tree().process_frame
+	current_lvl_stored = lvl
 	ckpt_pos = temp_death(false)
 	ckpt_last = 0
 	listed_ckpt = list_in_group()
 	debug_last_skipped_ckpt = 0
+	time_min = 0
+	time_sec = 0
+	time_dec = 0
 
 func _ready():
-	await get_tree().process_frame #game crashes without this. get your act together godot
-	ckpt_pos = temp_death(false) #this just returns the spawn.global_position
-	listed_ckpt = list_in_group()
+	await get_tree().process_frame #game crashes without this ???
+	ckpt_set()
 	print("Ready (Player One)")
 
 func debug_print_child(par: Node2D,recurse:bool=false):
@@ -138,7 +152,6 @@ func side_damage(_body: Node2D):
 		temp_death()
 	else:
 		print("enemy "+str(_body.name)+" mask "+str(_body.collision_mask)+" layer "+str(_body.collision_layer)+" matches my mask "+str(collision_mask)+" layer "+str(collision_layer))
-
 func _physics_process(delta: float) -> void:
 	if first_frame:
 		pass
@@ -158,6 +171,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or double_jump > 0):
 		velocity.y = JUMP_VELOCITY
 		double_jump -= 1
+		if !timer_started:
+			timer_started = true
+			$Timer.start()
 	if Input.is_action_just_pressed("color_forward"):
 		if color_counter >= COLOR_STOP:
 			color_counter = 1 #overflow behavior
@@ -212,6 +228,9 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
+		if !timer_started:
+			timer_started = true
+			$Timer.start()
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED*0.2)
 	velocity.x += schedule_vel_x
@@ -257,6 +276,7 @@ func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group("ckpt"):
 		ckpt_pos = area.global_position
 		ckpt_last = area.ckpt_id
+		death_this_ckpt = 0
 		area.queue_free()
 
 func _on_hazardbox_entered(body: Node2D):
@@ -266,3 +286,24 @@ func _on_bouncebox_entered(body: Node2D):
 	print("bouncebox enter "+body.name)
 	if body.name == "TileMapLayer":
 		velocity.y += JUMP_VELOCITY*1.65
+
+
+func _on_timer_timeout() -> void:
+	#print("timer tick")
+	time_dec += 1
+	full_time_base += 1
+	full_time_dec += 1
+	if time_dec > 9:
+		time_dec = 0
+		time_sec += 1
+	if full_time_dec > 9:
+		full_time_dec = 0
+		full_time_sec += 1
+	if time_sec > 59:
+		time_sec = 0
+		time_min += 1
+	if full_time_sec > 59:
+		full_time_sec = 0
+		full_time_min += 1
+	display_time.emit([time_min,time_sec,time_dec],
+	[full_time_min,full_time_sec,full_time_dec],current_lvl_stored)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://dil7raqsxdn1s"]
+[gd_scene load_steps=18 format=3 uid="uid://dil7raqsxdn1s"]
 
 [ext_resource type="Script" uid="uid://brltw0m1gyax4" path="res://player.gd" id="1_4yy1f"]
 [ext_resource type="Script" uid="uid://sn6ujv73up73" path="res://lvl_manager.gd" id="3_2ss5u"]
+[ext_resource type="PackedScene" uid="uid://dvpb1unh17h3m" path="res://HUD.tscn" id="3_ckrgq"]
 
 [sub_resource type="Gradient" id="Gradient_7mycd"]
 colors = PackedColorArray(0, 0, 0, 1, 0.7529412, 0.3529412, 0.3529412, 1)
@@ -99,12 +100,19 @@ collision_mask = 512
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/BounceBox"]
 shape = SubResource("RectangleShape2D_2ss5u")
 
+[node name="Timer" type="Timer" parent="Player"]
+wait_time = 0.1
+
 [node name="LvlManager" type="Node2D" parent="."]
 script = ExtResource("3_2ss5u")
 
+[node name="CanvasLayer" parent="." instance=ExtResource("3_ckrgq")]
+
+[connection signal="display_time" from="Player" to="CanvasLayer" method="_on_player_display_time"]
 [connection signal="skip_to_level" from="Player" to="LvlManager" method="_on_player_skip_to_level"]
 [connection signal="area_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Player/HazardBox" to="Player" method="_on_hazardbox_entered"]
 [connection signal="body_entered" from="Player/BounceBox" to="Player" method="_on_bouncebox_entered"]
+[connection signal="timeout" from="Player/Timer" to="Player" method="_on_timer_timeout"]
 [connection signal="player_null_velocity" from="LvlManager" to="Player" method="_on_null_velocity"]
