@@ -27,3 +27,13 @@ func _on_player_display_time(lvl: Array, full: Array,current_lvl_number: int) ->
 		pad_g_min = "0"+pad_g_min
 	$LvlTime.text = "LVL"+str(current_lvl_number)+": "+pad_lvl_min+":"+pad_lvl_sec+"."+str(lvl[2])
 	$GlobalTime.text =  pad_g_min+":"+pad_g_sec+"."+str(full[2])
+
+
+func _on_player_display_death(total: int, lvl: int, ckpt: int, show_ckpt: bool) -> void:
+	if !show_ckpt:
+		$Ckpt.show() # i entered the boolean wrong in my signal emit events
+	else:
+		$Ckpt.hide()
+	$Total.text = str(total)
+	$Level.text = str(lvl)
+	$Ckpt.text = str(ckpt)

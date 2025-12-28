@@ -1,6 +1,7 @@
 extends CharacterBody2D
 signal skip_to_level(lvl: int)
 signal display_time(lvl: Array[int],full: Array[int],current_lvl_num: int)
+signal display_death(total: int, lvl: int, ckpt: int, show_ckpt: bool)
 @export var red_sprite: Texture2D
 @export var yellow_sprite: Texture2D
 @export var blue_sprite: Texture2D
@@ -26,6 +27,7 @@ var color_counter = 1
 var first_frame = true
 var timer_started = false
 var hitbox_disabled = false
+var game_won: bool = false
 var rel: Transform2D
 var rel_vec: Vector2
 var rel_ratio_x: float
@@ -45,6 +47,7 @@ var elev_layer = 6 #layer the player resides on
 var ckpt_last = 0
 var ckpt_pos = null
 var listed_ckpt: Array = []
+var death_total: int = 0
 var death_this_lvl: int = 0
 var death_this_ckpt: int = 0
 var time_min: int = 0
@@ -65,6 +68,9 @@ func ckpt_set(lvl = current_lvl_stored): #this is just "on new level entered by 
 	time_min = 0
 	time_sec = 0
 	time_dec = 0
+	death_this_lvl = 0
+	death_this_ckpt = 0
+	display_death.emit(death_total,death_this_lvl,death_this_ckpt,(len(listed_ckpt) == 0))
 
 func _ready():
 	await get_tree().process_frame #game crashes without this ???
@@ -87,7 +93,11 @@ func temp_death(setcoord: bool = true):
 	if setcoord and (debug_god_mode and global_position.y < KILL_Y):
 		setcoord = false #godmode doesn't work when falling down
 	if setcoord:
+		death_total += 1
+		death_this_lvl += 1
+		death_this_ckpt += 1
 		_on_null_velocity()
+		display_death.emit(death_total,death_this_lvl,death_this_ckpt,(len(listed_ckpt) == 0))
 	main_parent = get_parent()
 	lvl_manager_node = main_parent.get_node_or_null("LvlManager")
 	if lvl_manager_node:
@@ -277,6 +287,7 @@ func _on_hitbox_area_entered(area: Area2D):
 		ckpt_pos = area.global_position
 		ckpt_last = area.ckpt_id
 		death_this_ckpt = 0
+		display_death.emit(death_total,death_this_lvl,0,false)
 		area.queue_free()
 
 func _on_hazardbox_entered(body: Node2D):
@@ -288,8 +299,12 @@ func _on_bouncebox_entered(body: Node2D):
 		velocity.y += JUMP_VELOCITY*1.65
 
 
-func _on_timer_timeout() -> void:
+func _on_timer_timeout():
 	#print("timer tick")
+	if game_won:
+		print("game won, stopping timer")
+		$Timer.paused = true
+		return null
 	time_dec += 1
 	full_time_base += 1
 	full_time_dec += 1

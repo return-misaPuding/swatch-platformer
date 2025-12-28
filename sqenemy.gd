@@ -41,7 +41,7 @@ func load_folder(path: String) -> Array[Texture2D]:
 	var file_textures: Array[Texture2D] = []
 	for file in DirAccess.get_files_at(path):
 		if file.ends_with(".png"):
-			print("loading "+path+file)
+			#print("loading "+path+file)
 			file_textures.append(load(path+file))
 	print(str(len(file_textures)))
 	return file_textures

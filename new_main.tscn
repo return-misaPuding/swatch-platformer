@@ -108,6 +108,7 @@ script = ExtResource("3_2ss5u")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("3_ckrgq")]
 
+[connection signal="display_death" from="Player" to="CanvasLayer" method="_on_player_display_death"]
 [connection signal="display_time" from="Player" to="CanvasLayer" method="_on_player_display_time"]
 [connection signal="skip_to_level" from="Player" to="LvlManager" method="_on_player_skip_to_level"]
 [connection signal="area_entered" from="Player/Hitbox" to="Player" method="_on_hitbox_area_entered"]

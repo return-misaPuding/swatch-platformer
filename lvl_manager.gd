@@ -17,6 +17,7 @@ func level_advance(adv: bool = true,tar: int = 1):
 		target_scene_path = "res://lvl"+str(tar)+".tscn"
 		current_level = tar
 	if current_level > max_level:
+		player.game_won = true
 		load_level("res://win.tscn")
 	else:
 		load_level(target_scene_path)
