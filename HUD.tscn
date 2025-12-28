@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvpb1unh17h3m"]
+[gd_scene load_steps=6 format=3 uid="uid://dvpb1unh17h3m"]
 
 [ext_resource type="Script" uid="uid://pcu0nanyscq5" path="res://hud.gd" id="1_efote"]
 [ext_resource type="LabelSettings" uid="uid://y871gnlrx4vk" path="res://HUD.tres" id="1_k5de2"]
+[ext_resource type="Texture2D" uid="uid://w67oacecr6ph" path="res://images/maptile32-bg-grid.png" id="3_vow1y"]
+[ext_resource type="Texture2D" uid="uid://dw0fr3g37g4kt" path="res://images/maptile32-pan.png" id="4_ne771"]
+[ext_resource type="Texture2D" uid="uid://dpt0dtgs446xk" path="res://images/maptile32-fluid.png" id="5_xxqia"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_efote")
@@ -42,3 +45,15 @@ offset_right = 1148.0
 offset_bottom = 117.0
 text = "000"
 label_settings = ExtResource("1_k5de2")
+
+[node name="TotalSprite" type="Sprite2D" parent="."]
+position = Vector2(1041, 16)
+texture = ExtResource("3_vow1y")
+
+[node name="LevelSprite" type="Sprite2D" parent="."]
+position = Vector2(1041, 56)
+texture = ExtResource("4_ne771")
+
+[node name="CkptSprite" type="Sprite2D" parent="."]
+position = Vector2(1041, 96)
+texture = ExtResource("5_xxqia")
